@@ -41,7 +41,9 @@ def log_to_db(pclass, sex, age, sibsp, parch, embarked, title, survive, proba):
         INSERT INTO predictions (pclass, sex, age, sibsp, parch, embarked, title, survive, proba)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
         """
-        cursor.execute(insert_query, (pclass, sex, age, sibsp, parch, embarked, title, survive, proba))
+        # Convert survive string to boolean
+        survive_bool = True if survive == "Survived" else False
+        cursor.execute(insert_query, (pclass, sex, age, sibsp, parch, embarked, title, survive_bool, proba))
         connection.commit()
         cursor.close()
         connection.close()
